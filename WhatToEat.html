@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WhatToEat</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <!-- Load Babel -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style type="text/css">
+        .h1 {
+            font-size: 48pt;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .outerdiv{
+            text-align: center;
+
+        }
+
+        .bt1{
+            display: inline-block;
+            font-size: 20pt;
+            font-weight: bold;
+            text-align:center;
+            color:Black;
+            background-color: White;
+            cursor: pointer;
+            border: 2px solid #555555;
+            height: 100px;
+            width:200px;
+            line-height:100px;
+            /*margin: auto;*/
+            margin: 20px;
+            transition-duration: 0.4s;
+
+        }
+        .bt1:hover{
+            background-color: #555555;
+            color: white;
+        }
+        .food1{
+            color:red;
+            text-align: center;
+            font-size: 72pt;
+            margin: 70px;
+        }
+
+        ;
+    </style>
+
+
+    <script type="text/babel">
+    
+    let t;
+    let c = 0;
+
+        class MyFood extends React.Component {
+            constructor(props){
+                super(props);
+                this.state={
+                FoodName:["","沙茶牛肉麵","朱記餃子館","田川日本料理","酒肴","頂廂園","鼎王","當歸鴨麵線","西提",
+                "老王記","城隍廟阿飄","原味敦品屋","原夜市鴨肉麵","老王記","段純貞牛肉麵","竹東排骨酥麵",
+                "山東館","十一街牛肉麵","肉圓","麻辣燙","B3","新橋燒肉","三商巧福","鼎泰豐"
+                ],
+                index:0,
+                runstate:true
+
+                };
+            }
+
+            render() {
+                
+                
+
+                return  <form >
+                <h1 className="h1">Ｗhat to eat for now?    想要吃什麼？</h1>
+                <br/>
+                <div className="outerdiv">
+                <div className="bt1" onClick ={this.startclick.bind(this)}>開始</div>
+                <div className="bt1" onClick ={this.endclick.bind(this)}>就是你了！</div>
+                </div>
+                <br/>
+                <div className="food1" >{this.state.FoodName[this.state.index]}</div>
+                </form>;
+
+            }
+
+            timedCount() {
+                    //測試數數
+                    // console.log(c);
+                    // c = c + 1;  
+                    let minNum = 1;
+                    let maxNum = this.state.FoodName.length - 1;
+                    let n = Math.floor(Math.random() * (maxNum - minNum + 1)) + minNum;
+                    //依照亂數改變index, 再顯示對應的食物
+                    this.setState(
+                    (currentState)=>({index:n})
+                    );
+                    t = setTimeout(function(){ this.timedCount() }.bind(this), 30 );//匿名函數需要用bind(this)來呼叫外部方法
+                    }
+
+            startclick(){
+            
+            this.setState(
+                    (currentState)=>({runstate:true})
+                    );
+            this.timedCount();
+            
+            }   
+            
+
+            endclick(){
+                this.setState((currentState)=>({runstate:false}));
+                clearTimeout(t);
+            }
+
+        }
+        window.addEventListener("load", () => {
+            let elem= <MyFood/>;
+            ReactDOM.render(
+            elem,document.body
+            );
+
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>
